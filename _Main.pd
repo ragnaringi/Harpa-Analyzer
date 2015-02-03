@@ -1,4 +1,4 @@
-#N canvas 169 171 1188 531 10;
+#N canvas 533 76 1263 525 10;
 #X declare -path libs/aubio;
 #X declare -path abs;
 #X declare -path libs/mrpeach;
@@ -13,7 +13,6 @@
 #X obj 313 237 aubioquiet~ -90;
 #X obj 313 170 adc~;
 #X obj 313 192 *~ 1;
-#X obj 313 259 print QUIET, f 12;
 #X obj 539 170 adc~;
 #X obj 539 259 dbtorms;
 #X floatatom 539 281 5 0 0 0 - - -, f 5;
@@ -22,7 +21,6 @@
 #X obj 539 192 *~ 1;
 #X floatatom 592 266 5 0 0 0 - - -, f 5;
 #X obj 539 237 env~ 2048;
-#X obj 400 259 print LOUD;
 #X text 313 138 LOUDNESS CHANGE;
 #X text 259 23 /* Please note: You may need to recreate aubio objects
 on first launch \, unless aubio.pd_darwin is in your Pd search path
@@ -104,7 +102,6 @@ on first launch \, unless aubio.pd_darwin is in your Pd search path
 #X restore 727 246 pd fft-spectrum~;
 #X obj 820 215 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
 -1 -1;
-#X obj 727 268 print;
 #X text 852 214 Sample FFT spectrum;
 #X text 852 234 Prints out 64 bins with corresponding amplitude;
 #X text 852 254 Bin frequency = (44100 / 128 = 344.5) * bin;
@@ -113,22 +110,43 @@ on first launch \, unless aubio.pd_darwin is in your Pd search path
 1;
 #X obj 820 180 metro 500;
 #X obj 67 65 declare -path libs/mrpeach;
+#X obj 426 478 udpsend;
+#X msg 500 430 connect 127.0.0.1 9997;
+#X obj 426 436 packOSC;
+#X msg 313 259 symbol QUIET;
+#X msg 400 259 symbol LOUD;
+#X msg 539 310 send /rms-db \$1;
+#X msg 511 450 disconnect;
+#X msg 727 309 send /fft \$1 \$2;
+#X msg 68 310 send /tempo-bang;
+#X msg 313 310 send /loudness-change \$1;
 #X connect 0 0 2 0;
+#X connect 1 0 38 0;
 #X connect 2 0 3 0;
 #X connect 3 0 1 0;
 #X connect 4 0 5 0;
 #X connect 4 0 3 1;
-#X connect 6 0 9 0;
-#X connect 6 1 18 0;
+#X connect 6 0 33 0;
+#X connect 6 1 34 0;
 #X connect 7 0 8 0;
 #X connect 8 0 6 0;
-#X connect 10 0 15 0;
-#X connect 11 0 12 0;
-#X connect 15 0 17 0;
-#X connect 15 0 23 0;
-#X connect 17 0 11 0;
-#X connect 17 0 16 0;
-#X connect 23 0 25 0;
-#X connect 24 0 23 1;
-#X connect 30 0 31 0;
-#X connect 31 0 24 0;
+#X connect 9 0 14 0;
+#X connect 10 0 11 0;
+#X connect 11 0 35 0;
+#X connect 14 0 16 0;
+#X connect 14 0 21 0;
+#X connect 16 0 10 0;
+#X connect 16 0 15 0;
+#X connect 21 0 37 0;
+#X connect 22 0 21 1;
+#X connect 27 0 28 0;
+#X connect 28 0 22 0;
+#X connect 31 0 30 0;
+#X connect 32 0 30 0;
+#X connect 33 0 39 0;
+#X connect 34 0 39 0;
+#X connect 35 0 32 0;
+#X connect 36 0 30 0;
+#X connect 37 0 32 0;
+#X connect 38 0 32 0;
+#X connect 39 0 32 0;
