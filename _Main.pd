@@ -1,4 +1,4 @@
-#N canvas 533 76 1263 525 10;
+#N canvas 533 76 1249 614 10;
 #X declare -path libs/aubio;
 #X declare -path abs;
 #X declare -path libs/mrpeach;
@@ -107,16 +107,17 @@
 1;
 #X obj 820 180 metro 500;
 #X obj 67 65 declare -path libs/mrpeach;
-#X obj 426 478 udpsend;
-#X msg 500 430 connect 127.0.0.1 9997;
+#X obj 491 477 udpsend;
+#X msg 565 429 connect 127.0.0.1 9997;
 #X obj 426 436 packOSC;
 #X msg 313 259 symbol QUIET;
 #X msg 400 259 symbol LOUD;
 #X msg 539 310 send /rms-db \$1;
-#X msg 511 450 disconnect;
+#X msg 576 449 disconnect;
 #X msg 727 309 send /fft \$1 \$2;
 #X msg 68 310 send /tempo-bang;
 #X msg 313 310 send /loudness-change \$1;
+#X obj 426 477 spigot;
 #X connect 0 0 2 0;
 #X connect 1 0 37 0;
 #X connect 2 0 3 0;
@@ -138,8 +139,9 @@
 #X connect 21 0 20 1;
 #X connect 26 0 27 0;
 #X connect 27 0 21 0;
+#X connect 29 0 39 1;
 #X connect 30 0 29 0;
-#X connect 31 0 29 0;
+#X connect 31 0 39 0;
 #X connect 32 0 38 0;
 #X connect 33 0 38 0;
 #X connect 34 0 31 0;
@@ -147,3 +149,4 @@
 #X connect 36 0 31 0;
 #X connect 37 0 31 0;
 #X connect 38 0 31 0;
+#X connect 39 0 29 0;
